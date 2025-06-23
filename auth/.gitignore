@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Self-defined files ###
+Note for springboot project.txt
