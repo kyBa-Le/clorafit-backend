@@ -1,4 +1,4 @@
-package com.project.auth.infrastructure;
+package com.project.auth.infrastructure.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
