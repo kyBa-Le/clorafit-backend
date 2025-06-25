@@ -3,7 +3,7 @@ package com.project.auth.presentation.restfulApi;
 import com.project.auth.domain.exception.ExistedPhoneException;
 import com.project.auth.infrastructure.util.DateTimeFormater;
 import com.project.auth.presentation.restfulApi.dto.error.CustomError;
-import com.project.auth.presentation.restfulApi.dto.error.CustomErrorResponse;
+import com.project.auth.presentation.restfulApi.dto.base.CustomErrorResponse;
 import com.project.auth.presentation.restfulApi.dto.error.ErrorDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
