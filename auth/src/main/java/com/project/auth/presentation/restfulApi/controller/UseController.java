@@ -3,16 +3,12 @@ package com.project.auth.presentation.restfulApi.controller;
 import com.project.auth.domain.entity.User;
 import com.project.auth.domain.service.UserService;
 import com.project.auth.presentation.restfulApi.dto.request.DataCreateUserDto;
-import com.project.auth.presentation.restfulApi.dto.response.SuccessResponse;
+import com.project.auth.presentation.restfulApi.dto.base.SuccessResponse;
 import com.project.auth.presentation.restfulApi.dto.response.UserResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api")
 @RestController
 public class UseController {
 
@@ -22,7 +18,7 @@ public class UseController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/api/users")
     public ResponseEntity<?> register(@Validated @RequestBody DataCreateUserDto dataCreateUserDto) {
         String password = dataCreateUserDto.password();
         String phone = dataCreateUserDto.phone();
@@ -42,7 +38,6 @@ public class UseController {
         }
 
         return ResponseEntity.badRequest().body("Create user failed");
-
     }
 
 }
