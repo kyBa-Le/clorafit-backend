@@ -6,6 +6,7 @@ import com.project.auth.presentation.restfulApi.dto.error.CustomError;
 import com.project.auth.presentation.restfulApi.dto.base.CustomErrorResponse;
 import com.project.auth.presentation.restfulApi.dto.error.ErrorDetails;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,6 +43,22 @@ public class ExceptionHandling {
 
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(
                 new CustomError("EXISTED",
+                        "The request body is invalid",
+                        errorDetails,
+                        DateTimeFormater.SimpleDateFormatConverter(new Date()))
+        );
+
+        return ResponseEntity.status(400).body(customErrorResponse);
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<CustomErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+        ErrorDetails detail = new ErrorDetails(null, exception.getMessage());
+        ArrayList<ErrorDetails> errorDetails = new ArrayList<>();
+        errorDetails.add(detail);
+
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(
+                new CustomError("BAD_ARGUMENT",
                         "The request body is invalid",
                         errorDetails,
                         DateTimeFormater.SimpleDateFormatConverter(new Date()))

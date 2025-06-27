@@ -1,5 +1,6 @@
 package com.project.auth.presentation.restfulApi.controller;
 
+import com.project.auth.domain.entity.Role;
 import com.project.auth.domain.entity.User;
 import com.project.auth.domain.service.UserService;
 import com.project.auth.presentation.restfulApi.dto.request.DataCreateUserDto;
@@ -22,8 +23,9 @@ public class UseController {
     public ResponseEntity<?> register(@Validated @RequestBody DataCreateUserDto dataCreateUserDto) {
         String password = dataCreateUserDto.password();
         String phone = dataCreateUserDto.phone();
+        Role role = dataCreateUserDto.role();
 
-        User user = this.userService.createUser(phone, password);
+        User user = this.userService.createUser(phone, password, role);
 
         if (user != null) {
             UserResponseDto response = new UserResponseDto(
@@ -32,7 +34,8 @@ public class UseController {
                     user.getFullName(),
                     user.getEmail(),
                     user.getDateOfBirth(),
-                    user.getPhone()
+                    user.getPhone(),
+                    user.getRole()
             );
             return ResponseEntity.ok().body(new SuccessResponse<>("Sign up successful", response));
         }

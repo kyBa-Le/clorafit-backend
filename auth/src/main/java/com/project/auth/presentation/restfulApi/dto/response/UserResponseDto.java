@@ -1,5 +1,7 @@
 package com.project.auth.presentation.restfulApi.dto.response;
 
+import com.project.auth.domain.entity.Role;
+
 import java.util.Date;
 
 public record UserResponseDto(
@@ -8,6 +10,7 @@ public record UserResponseDto(
         String fullName,
         String email,
         Date dateOfBirth,
-        String phone
+        String phone,
+        Role role
 ) {
 }
