@@ -31,8 +31,8 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) -> {
-                    authorizeRequests.requestMatchers(HttpMethod.POST, "/api/login", "/api/users").permitAll();
-                    authorizeRequests.anyRequest().authenticated();
+                    authorizeRequests.requestMatchers("/api/private/**").authenticated();
+                    authorizeRequests.anyRequest().permitAll();
                 })
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(this.jwtAuthenticationFilter, LogoutFilter.class);
