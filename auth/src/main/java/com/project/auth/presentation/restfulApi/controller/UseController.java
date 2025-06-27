@@ -18,7 +18,7 @@ public class UseController {
         this.userService = userService;
     }
 
-    @PostMapping("/api/users")
+    @PostMapping("/api/v1/users")
     public ResponseEntity<?> register(@Validated @RequestBody DataCreateUserDto dataCreateUserDto) {
         String password = dataCreateUserDto.password();
         String phone = dataCreateUserDto.phone();

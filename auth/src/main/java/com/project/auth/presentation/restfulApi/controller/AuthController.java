@@ -23,7 +23,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/api/v1/login")
     public ResponseEntity<?> usernamePasswordLogin(@RequestBody LoginDto loginDto) {
         try {
             String token = authService.authenticate(loginDto.phone(), loginDto.password());
