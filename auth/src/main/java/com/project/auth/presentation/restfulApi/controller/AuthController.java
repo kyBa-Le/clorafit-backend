@@ -7,8 +7,6 @@ import com.project.auth.presentation.restfulApi.dto.request.LoginDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,10 +30,6 @@ public class AuthController {
 
         } catch (BadCredentialsException ex) {
             return responseError("BAD_CREDENTIALS", "Invalid username or password");
-        } catch (DisabledException ex) {
-            return responseError("ACCOUNT_DISABLED", "Your account is disabled");
-        } catch (LockedException ex) {
-            return responseError("ACCOUNT_LOCKED", "Your account is locked");
         } catch (AuthenticationException ex) {
             return responseError("AUTH_ERROR", ex.getMessage());
         }
