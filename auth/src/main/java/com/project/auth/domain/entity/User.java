@@ -1,5 +1,8 @@
 package com.project.auth.domain.entity;
 
+import com.project.auth.domain.enums.Provider;
+import com.project.auth.domain.enums.Role;
+import com.project.auth.domain.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,13 +30,21 @@ public class User {
     private Date dateOfBirth;
     @NotNull
     private Role role;
+    @NotNull
+    private Provider provider;
+    private String address;
+    private Status status = Status.ACTIVE;
 
-    public User(String phone, String encryptedPassword, String email, String username, Date dateOfBirth, Role role) {
+
+    public User(String phone, String encryptedPassword, String email, String username,
+                Date dateOfBirth, Role role, Provider provider, String address) {
         this.phone = phone;
         this.password = encryptedPassword;
         this.email = email;
         this.username = username;
         this.dateOfBirth = dateOfBirth;
         this.role = role;
+        this.provider = provider;
+        this.address = address;
     }
 }

@@ -1,6 +1,6 @@
 package com.project.auth.presentation.restfulApi.dto.response;
 
-import com.project.auth.domain.entity.Role;
+import com.project.auth.domain.enums.Role;
 
 import java.util.Date;
 

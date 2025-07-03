@@ -1,6 +1,7 @@
 package com.project.auth.presentation.restfulApi.controller;
 
-import com.project.auth.domain.entity.Role;
+import com.project.auth.domain.enums.Provider;
+import com.project.auth.domain.enums.Role;
 import com.project.auth.domain.entity.User;
 import com.project.auth.domain.service.UserService;
 import com.project.auth.presentation.restfulApi.dto.request.DataCreateUserDto;
@@ -25,7 +26,7 @@ public class UseController {
         String phone = dataCreateUserDto.phone();
         Role role = dataCreateUserDto.role();
 
-        User user = this.userService.createUser(phone, password, role);
+        User user = this.userService.createUser(phone, password, role, Provider.LOCAL);
 
         if (user != null) {
             UserResponseDto response = new UserResponseDto(

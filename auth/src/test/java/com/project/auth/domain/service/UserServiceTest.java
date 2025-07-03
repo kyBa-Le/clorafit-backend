@@ -1,6 +1,7 @@
 package com.project.auth.domain.service;
 
-import com.project.auth.domain.entity.Role;
+import com.project.auth.domain.enums.Provider;
+import com.project.auth.domain.enums.Role;
 import com.project.auth.domain.entity.User;
 import com.project.auth.domain.exception.ExistedPhoneException;
 import com.project.auth.persistence.repository.UserRepository;
@@ -34,7 +35,7 @@ class UserServiceTest {
         when(passwordEncoder.encode(rawPassword)).thenReturn("thisIsAnEncodedPassword");
 
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        var result = userService.createUser(phone, rawPassword, role);
+        var result = userService.createUser(phone, rawPassword, role, Provider.GOOGLE);
 
         assertNotNull(result);
         assertEquals(phone, result.getPhone());
@@ -53,11 +54,11 @@ class UserServiceTest {
         var rawPassword = "password";
         var role = Role.CONSUMER;
 
-        var existingUser = new User(phone, rawPassword, null, null, null, role);
+        var existingUser = new User(phone, rawPassword, null, null, null, role, Provider.GOOGLE, null);
         when(userRepository.findByPhone(phone)).thenReturn(existingUser);
 
         assertThrows(ExistedPhoneException.class, () ->
-                userService.createUser(phone, rawPassword, role)
+                userService.createUser(phone, rawPassword, role, Provider.GOOGLE)
         );
 
         verify(userRepository).findByPhone(phone);
