@@ -6,11 +6,15 @@ com\project\product\dto\error\Error.class
 com\project\product\middleware\GlobalExceptionHandler.class
 com\project\product\repository\ProductRepository.class
 com\project\product\service\CategoryService.class
+com\project\product\validation\ProductQuantityRule.class
 com\project\product\exception\ResourceNotFoundException.class
 com\project\product\configuration\DataSeeder.class
 com\project\product\entity\Category.class
+com\project\product\validation\ProductPriceRule.class
+com\project\product\validation\DiscountRule.class
 com\project\product\entity\Product.class
 com\project\product\controller\ProductController.class
 com\project\product\dto\error\ErrorDetails.class
+com\project\product\validation\ProductNameRule.class
 com\project\product\repository\CategoryRepository.class
 com\project\product\dto\response\SuccessResponse.class

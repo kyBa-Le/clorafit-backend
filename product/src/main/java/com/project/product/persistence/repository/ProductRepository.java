@@ -1,0 +1,9 @@
+package com.project.product.persistence.repository;
+
+import com.project.product.business.entity.Product;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProductRepository extends MongoRepository<Product, String> {
+}

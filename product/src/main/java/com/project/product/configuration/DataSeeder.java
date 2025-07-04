@@ -1,8 +1,8 @@
 package com.project.product.configuration;
 
-import com.project.product.entity.Category;
-import com.project.product.repository.CategoryRepository;
-import com.project.product.repository.ProductRepository;
+import com.project.product.business.entity.Category;
+import com.project.product.persistence.repository.CategoryRepository;
+import com.project.product.persistence.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

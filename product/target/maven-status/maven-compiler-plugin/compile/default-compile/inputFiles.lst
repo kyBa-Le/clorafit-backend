@@ -14,3 +14,7 @@ D:\SMarket_project\product\src\main\java\com\project\product\repository\Category
 D:\SMarket_project\product\src\main\java\com\project\product\repository\ProductRepository.java
 D:\SMarket_project\product\src\main\java\com\project\product\service\CategoryService.java
 D:\SMarket_project\product\src\main\java\com\project\product\service\ProductService.java
+D:\SMarket_project\product\src\main\java\com\project\product\validation\DiscountRule.java
+D:\SMarket_project\product\src\main\java\com\project\product\validation\ProductNameRule.java
+D:\SMarket_project\product\src\main\java\com\project\product\validation\ProductPriceRule.java
+D:\SMarket_project\product\src\main\java\com\project\product\validation\ProductQuantityRule.java
