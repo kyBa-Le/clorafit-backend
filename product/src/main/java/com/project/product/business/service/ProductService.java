@@ -19,8 +19,8 @@ public class ProductService {
     }
 
     public Product createProduct(String name, String description, double price, float discount, int quantity,
-                                 String shopId, List<String> imageLinks, Category categoryId) {
-        Product product = new Product(name, description, price, discount, quantity, shopId, imageLinks, categoryId);
+                                 String shopId, List<String> imageLinks, Category category) {
+        Product product = new Product(name, description, price, discount, quantity, shopId, imageLinks, category);
         return productRepository.save(product);
     }
 
@@ -31,7 +31,7 @@ public class ProductService {
         return productRepository.findById(productId).get();
     }
 
-    public List<Product> getAllProductsByCategory(String categoryId) {
+    public List<Product> getAllProductsByCategoryId(String categoryId) {
         return productRepository.findAll()
                 .stream()
                 .filter(p -> p.getCategory().getId().equals(categoryId))

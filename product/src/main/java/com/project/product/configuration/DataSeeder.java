@@ -18,8 +18,8 @@ public class DataSeeder {
         return args -> {
 
             if (categoryRepo.count() == 0 && productRepo.count() == 0) {
-                Category electronics = new Category(null, "Electronics");
-                Category clothing = new Category(null, "Clothing");
+                Category electronics = new Category("Electronics");
+                Category clothing = new Category("Clothing");
 
                 categoryRepo.saveAll(List.of(electronics, clothing));
 

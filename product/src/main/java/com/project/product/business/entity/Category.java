@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document(collection = "categories")
 @Getter
 @Setter
@@ -14,6 +16,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Category {
     @Id
-    private String id;
+    private final String id = UUID.randomUUID().toString();
     private String name;
 }

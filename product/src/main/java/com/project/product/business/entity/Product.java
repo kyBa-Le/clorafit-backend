@@ -8,13 +8,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
+import java.util.UUID;
 
 @Document(collection = "products")
 @Getter
 @Setter
 public class Product {
     @Id
-    private String id;
+    private final String id = UUID.randomUUID().toString();
     private String name;
     private String description;
     private double price;

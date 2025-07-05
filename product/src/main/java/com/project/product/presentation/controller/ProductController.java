@@ -48,7 +48,7 @@ public class ProductController {
 
     @GetMapping("/v1/products")
     public ResponseEntity<?> getAllProductsByCategory(@RequestParam("category-id") String categoryId) {
-        List<Product> products = productService.getAllProductsByCategory(categoryId);
+        List<Product> products = productService.getAllProductsByCategoryId(categoryId);
         return ResponseEntity.ok().body(new SuccessResponse<>("Get all products successfully", products));
     }
 }
