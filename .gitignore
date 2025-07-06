@@ -1,36 +1,44 @@
-.idea
+# IDEs and Editor Files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+/product/.idea/
+
+# Project Notes and Drawings
 ERD.drawio
 Note.txt
-
 HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
+
+# Maven Output and Wrapper
+**/target/
 !**/src/main/**/target/
 !**/src/test/**/target/
+.mvn/wrapper/maven-wrapper.jar
 
-### STS ###
+# Gradle Output
+**/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+.nb-gradle/
+
+# STS (Spring Tool Suite)
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Specific Services (Optional if using **/target/)
+# These are redundant with **/target/ above, but you can keep them for clarity if you want
+/auth/target/
+/product/target/
