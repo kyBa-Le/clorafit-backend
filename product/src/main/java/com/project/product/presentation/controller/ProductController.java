@@ -24,7 +24,7 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/v1/products")
+    @PostMapping("/api/v1/products")
     public ResponseEntity<?> addProduct(@Valid @RequestBody CreateProductDto createProductDto) {
         Category category = categoryService.getCategoryById(createProductDto.categoryId());
 
@@ -40,13 +40,13 @@ public class ProductController {
         return ResponseEntity.ok().body(new SuccessResponse<>("Create product successfully", product));
     }
 
-    @GetMapping("/v1/products/{id}")
+    @GetMapping("/api/v1/products/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") String productId) {
         var product = productService.getProductById(productId);
         return ResponseEntity.ok().body(new SuccessResponse<>("Get product successfully", product));
     }
 
-    @GetMapping("/v1/products")
+    @GetMapping("/api/v1/products")
     public ResponseEntity<?> getAllProductsByCategory(@RequestParam("category-id") String categoryId) {
         List<Product> products = productService.getAllProductsByCategoryId(categoryId);
         return ResponseEntity.ok().body(new SuccessResponse<>("Get all products successfully", products));

@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    username: root
+    url: jdbc:mysql://auth-myql:3306/auth
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+
+  jwt:
+    secret-key: thisislekybasecretkey15042005hehe
+    expiration: 360000
+
+server:
+  port: 0
+  servlet:
+    context-path: /auth-service
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka

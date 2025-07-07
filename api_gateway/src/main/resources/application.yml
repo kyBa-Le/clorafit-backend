@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api_gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: auth
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth-service/api/**
+
+            - id: product
+              uri: lb://product-service
+              predicates:
+                - Path=/product-service/api/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka

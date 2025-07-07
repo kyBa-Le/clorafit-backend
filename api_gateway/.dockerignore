@@ -1,0 +1,8 @@
+target/
+.git/
+*.log
+*.iml
+.idea/
+.DS_Store
+*.swp
+*.tmp
