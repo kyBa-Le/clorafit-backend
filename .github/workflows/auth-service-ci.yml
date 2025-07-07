@@ -17,7 +17,7 @@ jobs:
         image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.AUTH_MYSQL_PASSWORD }}
           MYSQL_DATABASE: auth
         ports:
           - 3306:3306
@@ -45,14 +45,14 @@ jobs:
         run: |
           echo "Waiting for MySQL..."
           for i in {1..30}; do
-            nc -z localhost 3306 && echo "MySQL is ready!" && break
+            nc -z 127.0.0.1 3306 && echo "MySQL is ready!" && break
             echo "Still waiting..."
             sleep 2
           done
 
       - name: Build with Maven using test profile
         env:
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.AUTH_MYSQL_USER }}
+          DB_PASSWORD: ${{ secrets.AUTH_MYSQL_PASSWORD }}
+          DB_NAME: auth
         run: mvn clean install -Dspring.profiles.active=test
