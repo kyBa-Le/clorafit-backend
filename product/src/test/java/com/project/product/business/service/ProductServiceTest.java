@@ -80,7 +80,7 @@ class ProductServiceTest {
     @Test
     void getAllProductsByCategoryId_returnNotNull() {
         var product = new Product();
-        var category = new Category();
+        var category = new Category("sampleId", "name", "icon");
         product.setCategory(category);
         when(productRepository.findAll()).thenReturn(List.of(product));
 
@@ -93,7 +93,7 @@ class ProductServiceTest {
     @Test
     void getAllProductsByCategoryId_returnNull() {
         var product = new Product();
-        var category = new Category();
+        var category = new Category("sampleId", "name", "icon");
         product.setCategory(category);
 
         when(productRepository.findAll()).thenReturn(List.of(product));
