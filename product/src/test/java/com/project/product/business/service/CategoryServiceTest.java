@@ -1,16 +1,14 @@
 package com.project.product.business.service;
 
 import com.project.product.business.entity.Category;
+import com.project.product.business.exception.ResourceNotFoundException;
 import com.project.product.persistence.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +36,7 @@ class CategoryServiceTest {
         String invalidId = "invalidId";
         when(categoryRepository.findById(invalidId)).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> categoryService.getCategoryById(invalidId));
+        assertThrows(ResourceNotFoundException.class, () -> categoryService.getCategoryById(invalidId));
         verify(categoryRepository, times(1)).findById(invalidId);
     }
 }

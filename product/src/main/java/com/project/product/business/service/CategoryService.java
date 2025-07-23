@@ -5,7 +5,6 @@ import com.project.product.business.exception.ResourceNotFoundException;
 import com.project.product.persistence.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class CategoryService {
