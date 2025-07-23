@@ -25,6 +25,9 @@ public class Product {
     private String shopId;
     @Field("image_links")
     private List<String> imageLinks;
+    @Field("sold_count")
+    private int soldCount = 0;
+
     @DBRef
     private Category category;
 

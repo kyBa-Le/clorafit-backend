@@ -9,6 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,8 @@ import static org.mockito.Mockito.*;
 class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private CategoryService categoryService;
     @InjectMocks
     private ProductService productService;
 
@@ -103,6 +108,49 @@ class ProductServiceTest {
 
         verify(productRepository, times(1)).findAll();
     }
+
+    @Test
+    void getTopSoldProductsByCategoryId_categoryExists_returnPageOfProducts() {
+        // Arrange
+        String categoryId = "cat-1";
+        Category mockCategory = new Category();
+        Page<Product> mockPage = new PageImpl<>(List.of(new Product(), new Product()));
+        int page = 0;
+        int size = 10;
+
+        when(categoryService.getCategoryById(categoryId)).thenReturn(mockCategory);
+        when(productRepository.findProductByCategory(eq(mockCategory), any(Pageable.class)))
+                .thenReturn(mockPage);
+
+        // Act
+        Page<Product> result = productService.getTopSoldProductsByCategoryId(categoryId, page, size);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.getContent().size());
+        verify(categoryService).getCategoryById(categoryId);
+        verify(productRepository).findProductByCategory(eq(mockCategory), any(Pageable.class));
+    }
+
+    @Test
+    void getTopSoldProductsByCategoryId_categoryNotFound_throwResourceNotFoundException() {
+        // Arrange
+        String categoryId = "invalid-cat";
+        int page = 0;
+        int size = 10;
+
+        when(categoryService.getCategoryById(categoryId))
+                .thenThrow(new ResourceNotFoundException("Category not found"));
+
+        // Act + Assert
+        assertThrows(ResourceNotFoundException.class, () ->
+                productService.getTopSoldProductsByCategoryId(categoryId, page, size));
+
+        verify(categoryService).getCategoryById(categoryId);
+        verifyNoInteractions(productRepository);
+    }
+
+
 
 
 }

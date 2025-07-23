@@ -1,10 +1,10 @@
 package com.project.product.business.service;
 
 import com.project.product.business.entity.Category;
+import com.project.product.business.exception.ResourceNotFoundException;
 import com.project.product.persistence.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class CategoryService {
@@ -18,7 +18,7 @@ public class CategoryService {
         if (categoryRepository.findById(id).isPresent()) {
             return categoryRepository.findById(id).get();
         }
-        throw new NoSuchElementException("Category not found");
+        throw new ResourceNotFoundException("Category not found");
     }
 
     public List<Category> findAll() {

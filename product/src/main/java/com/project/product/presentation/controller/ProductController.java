@@ -1,5 +1,6 @@
 package com.project.product.presentation.controller;
 
+import com.project.product.presentation.dto.pagination.PaginationMapper;
 import com.project.product.presentation.dto.request.CreateProductDto;
 import com.project.product.presentation.dto.response.SuccessResponse;
 import com.project.product.business.entity.Category;
@@ -7,10 +8,10 @@ import com.project.product.business.entity.Product;
 import com.project.product.business.service.CategoryService;
 import com.project.product.business.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -50,5 +51,16 @@ public class ProductController {
     public ResponseEntity<?> getAllProductsByCategory(@RequestParam("category-id") String categoryId) {
         List<Product> products = productService.getAllProductsByCategoryId(categoryId);
         return ResponseEntity.ok().body(new SuccessResponse<>("Get all products successfully", products));
+    }
+
+    @GetMapping("/api/v1/products/top-sold")
+    public ResponseEntity<?> getTopSoldProductsByCategory(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("category-id") String categoryId
+    ) {
+        Page<Product> products = productService.getTopSoldProductsByCategoryId(categoryId, page, size);
+        var response = PaginationMapper.map(products);
+        return ResponseEntity.ok(new SuccessResponse<>("Get top sold products successfully", response));
     }
 }
