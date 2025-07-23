@@ -1,10 +1,9 @@
 package com.project.product.presentation.controller;
-
-import com.project.product.business.entity.Category;
 import com.project.product.business.service.CategoryService;
+import com.project.product.presentation.dto.response.SuccessResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 @RestController
 public class CategoryController {
@@ -15,7 +14,10 @@ public class CategoryController {
     }
 
     @GetMapping("/api/v1/categories")
-    public List<Category> getAllCategories() {
-        return categoryService.findAll();
+    public ResponseEntity<SuccessResponse<?>> getAllCategories() {
+        var categories = categoryService.findAll();
+        String message = "Get categories successful!";
+
+        return ResponseEntity.ok(new SuccessResponse<>(message, categories));
     }
 }
