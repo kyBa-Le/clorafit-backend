@@ -1,5 +1,6 @@
 package com.project.product.presentation.controller;
 
+import com.project.product.presentation.constants.ProductSortFieldMapper;
 import com.project.product.presentation.dto.pagination.PaginationMapper;
 import com.project.product.presentation.dto.request.CreateProductDto;
 import com.project.product.presentation.dto.response.SuccessResponse;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @Validated
@@ -47,20 +47,21 @@ public class ProductController {
         return ResponseEntity.ok().body(new SuccessResponse<>("Get product successfully", product));
     }
 
-    @GetMapping("/api/v1/products")
-    public ResponseEntity<?> getAllProductsByCategory(@RequestParam("category-id") String categoryId) {
-        List<Product> products = productService.getAllProductsByCategoryId(categoryId);
-        return ResponseEntity.ok().body(new SuccessResponse<>("Get all products successfully", products));
-    }
-
-    @GetMapping("/api/v1/products/top-sold")
-    public ResponseEntity<?> getTopSoldProductsByCategory(
+    @GetMapping("/api/v1/categories/{category-id}/products")
+    public ResponseEntity<?> getSortedProductsByCategory(
             @RequestParam("page") int page,
             @RequestParam("size") int size,
-            @RequestParam("category-id") String categoryId
+            @PathVariable("category-id") String categoryId,
+            @RequestParam(name = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(name = "direction", defaultValue = "DESC", required = false) String direction
     ) {
-        Page<Product> products = productService.getTopSoldProductsByCategoryId(categoryId, page, size);
+        String sortField = ProductSortFieldMapper.SORT_FIELDS.get(sort);
+        if (sortField == null) {
+            throw new IllegalArgumentException("Invalid sort field: " + sort + ", possible values: " + ProductSortFieldMapper.getSortFields());
+        }
+        Page<Product> products = productService.getSortedProductsByCategory(categoryId, page, size, sortField, direction);
+
         var response = PaginationMapper.map(products);
-        return ResponseEntity.ok(new SuccessResponse<>("Get top sold products successfully", response));
+        return ResponseEntity.ok(new SuccessResponse<>("Get products successfully", response));
     }
 }
