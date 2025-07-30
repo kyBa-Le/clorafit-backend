@@ -6,21 +6,24 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Document(collection = "products")
 @Getter
 @Setter
 public class Product {
     @Id
-    private final String id = UUID.randomUUID().toString();
+    private String id;
     private String name;
     private String description;
     private double price;
     private float discount;
     private int quantity;
+    private float rating;
+
+    @Field("created_at")
+    private final Date createdAt = new Date();
     @Field("shop_id")
     private String shopId;
     @Field("image_links")

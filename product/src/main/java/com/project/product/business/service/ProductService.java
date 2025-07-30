@@ -8,10 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.project.product.business.exception.ResourceNotFoundException;
 
 @Service
@@ -44,8 +42,15 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Page<Product> getTopSoldProductsByCategoryId(String categoryId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "soldCount"));
+    public Page<Product> getSortedProductsByCategory(String categoryId, int page, int size, String sortField, String direction) {
+        Pageable pageable;
+        if (sortField != null && !sortField.isEmpty()) {
+            Sort.Direction sortDirection = Sort.Direction.fromString(direction);
+            pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortField));
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
         Category category = categoryService.getCategoryById(categoryId);
         return productRepository.findProductByCategory(category, pageable);
     }

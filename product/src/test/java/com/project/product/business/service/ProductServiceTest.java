@@ -12,10 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -52,7 +50,6 @@ class ProductServiceTest {
         assertEquals(shopId, result.getShopId());
         assertEquals(imageLinks, result.getImageLinks());
         assertEquals(category, result.getCategory());
-        assertNotNull(result.getId());
 
         verify(productRepository, times(1)).save(any(Product.class));
 
@@ -110,7 +107,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getTopSoldProductsByCategoryId_categoryExists_returnPageOfProducts() {
+    void getSortedProductsByCategory_categoryExists_returnPageOfProducts() {
         // Arrange
         String categoryId = "cat-1";
         Category mockCategory = new Category();
@@ -123,7 +120,7 @@ class ProductServiceTest {
                 .thenReturn(mockPage);
 
         // Act
-        Page<Product> result = productService.getTopSoldProductsByCategoryId(categoryId, page, size);
+        Page<Product> result = productService.getSortedProductsByCategory(categoryId, page, size, "", "DESC");
 
         // Assert
         assertNotNull(result);
@@ -133,7 +130,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getTopSoldProductsByCategoryId_categoryNotFound_throwResourceNotFoundException() {
+    void getSortedProductsByCategory_categoryNotFound_throwResourceNotFoundException() {
         // Arrange
         String categoryId = "invalid-cat";
         int page = 0;
@@ -144,7 +141,7 @@ class ProductServiceTest {
 
         // Act + Assert
         assertThrows(ResourceNotFoundException.class, () ->
-                productService.getTopSoldProductsByCategoryId(categoryId, page, size));
+                productService.getSortedProductsByCategory(categoryId, page, size, "", "DESC"));
 
         verify(categoryService).getCategoryById(categoryId);
         verifyNoInteractions(productRepository);
