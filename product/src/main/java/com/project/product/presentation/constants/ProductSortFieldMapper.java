@@ -8,7 +8,7 @@ public class ProductSortFieldMapper {
 
     static {
         Map<String, String> sortFields = new HashMap<>();
-        sortFields.put("", "");
+        sortFields.put("", "id");
         sortFields.put("sold", "soldCount");
         sortFields.put("latest", "createdAt");
         sortFields.put("rating", "rating");

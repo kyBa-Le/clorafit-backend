@@ -6,6 +6,7 @@ import com.project.product.presentation.dto.request.GetProductsRequest;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Sort;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -21,10 +22,10 @@ public class ProductSearchCriteria {
     public static ProductSearchCriteria of(GetProductsRequest request) {
         ProductSearchCriteria criteria = new ProductSearchCriteria();
 
+        criteria.setPage(Objects.requireNonNullElse(request.page(), 0));
+        criteria.setSize(Objects.requireNonNullElse(request.size(), 50));
+        criteria.setSort(Objects.requireNonNullElse(request.sort(), ""));
         criteria.setName(request.name());
-        criteria.setPage(request.page());
-        criteria.setSize(request.size());
-        criteria.setSort(request.sort());
 
         Sort.Direction direction = request.direction() != null
                 ? Sort.Direction.fromString(request.direction()) : Sort.Direction.DESC;
