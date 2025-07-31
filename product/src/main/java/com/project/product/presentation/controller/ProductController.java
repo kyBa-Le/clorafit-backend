@@ -1,8 +1,9 @@
 package com.project.product.presentation.controller;
 
-import com.project.product.presentation.constants.ProductSortFieldMapper;
+import com.project.product.business.model.ProductSearchCriteria;
 import com.project.product.presentation.dto.pagination.PaginationMapper;
 import com.project.product.presentation.dto.request.CreateProductDto;
+import com.project.product.presentation.dto.request.GetProductsRequest;
 import com.project.product.presentation.dto.response.SuccessResponse;
 import com.project.product.business.entity.Category;
 import com.project.product.business.entity.Product;
@@ -48,18 +49,16 @@ public class ProductController {
     }
 
     @GetMapping("/api/v1/categories/{category-id}/products")
-    public ResponseEntity<?> getSortedProductsByCategory(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size,
+    public ResponseEntity<?> findProductsByCategory(
             @PathVariable("category-id") String categoryId,
-            @RequestParam(name = "sort", defaultValue = "", required = false) String sort,
-            @RequestParam(name = "direction", defaultValue = "DESC", required = false) String direction
-    ) {
-        String sortField = ProductSortFieldMapper.SORT_FIELDS.get(sort);
-        if (sortField == null) {
-            throw new IllegalArgumentException("Invalid sort field: " + sort + ", possible values: " + ProductSortFieldMapper.getSortFields());
-        }
-        Page<Product> products = productService.getSortedProductsByCategory(categoryId, page, size, sortField, direction);
+            @ModelAttribute GetProductsRequest request
+            ) {
+        var category = categoryService.getCategoryById(categoryId);
+
+        var criteria = ProductSearchCriteria.of(request);
+        criteria.setCategory(category);
+
+        Page<Product> products = productService.getProductsByCategory(criteria);
 
         var response = PaginationMapper.map(products);
         return ResponseEntity.ok(new SuccessResponse<>("Get products successfully", response));
