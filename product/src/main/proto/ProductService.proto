@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "com.project.product";
+
+message ProductRequest {
+  string id = 1;
+}
+
+message ProductResponse {
+  string id = 1;
+  string name = 2;
+  double price = 3;
+  float discount = 4;
+  string shopId = 5;
+  int32 quantity = 6;
+  string categoryId = 7;
+}
+
+service ProductService {
+  rpc GetProductById (ProductRequest) returns (ProductResponse);
+}

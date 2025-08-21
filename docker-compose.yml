@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./mysql/init:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
@@ -48,6 +48,16 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://internal-mysql:3306/auth
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
+
+  order-service:
+    build: ./order
+    container_name: order-service
+    depends_on:
+      - discovery-server
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://internal-mysql:3306/order?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
 
   product-service:
