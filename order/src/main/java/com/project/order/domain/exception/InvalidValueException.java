@@ -1,6 +1,6 @@
 package com.project.order.domain.exception;
 
-import com.project.order.presentation.dto.error.ErrorDetail;
+import com.project.order.adapter.restApi.dto.error.ErrorDetail;
 
 public class InvalidValueException extends RuntimeException {
     public final ErrorDetail errorDetail;

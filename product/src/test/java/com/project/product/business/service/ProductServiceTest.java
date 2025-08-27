@@ -3,7 +3,7 @@ package com.project.product.business.service;
 import com.project.product.business.entity.Category;
 import com.project.product.business.entity.Product;
 import com.project.product.business.exception.ResourceNotFoundException;
-import com.project.product.persistence.repository.ProductRepository;
+import com.project.product.infrastructure.persistence.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

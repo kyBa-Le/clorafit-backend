@@ -6,8 +6,10 @@ import com.project.order.domain.entity.Orders;
 import com.project.order.domain.exception.InvalidValueException;
 import com.project.order.domain.validation.OrderValidator;
 import com.project.order.infrastructure.persistence.OrderRepository;
-import com.project.order.presentation.dto.error.ErrorDetail;
+import com.project.order.adapter.restApi.dto.error.ErrorDetail;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class OrderService {
@@ -42,6 +44,7 @@ public class OrderService {
         order.setQuantity(quantity);
         order.setNote(note);
         order.setProperties(properties);
+        order.setDate(new Date());
 
         this.orderRepository.save(order);
         return order;

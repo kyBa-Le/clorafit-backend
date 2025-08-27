@@ -2,7 +2,7 @@ package com.project.product.business.grpcService;
 
 import com.project.product.ProductServiceGrpc;
 import com.project.product.ProductServiceOuterClass;
-import com.project.product.persistence.repository.ProductRepository;
+import com.project.product.infrastructure.persistence.repository.ProductRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.springframework.stereotype.Service;

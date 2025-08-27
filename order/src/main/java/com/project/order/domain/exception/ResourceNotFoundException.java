@@ -1,6 +1,6 @@
 package com.project.order.domain.exception;
 
-import com.project.order.presentation.dto.error.ErrorDetail;
+import com.project.order.adapter.restApi.dto.error.ErrorDetail;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
