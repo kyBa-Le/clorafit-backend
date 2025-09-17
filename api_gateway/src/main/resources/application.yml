@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: api_gateway
+  jwt:
+    secret-key: thisislekybasecretkey15042005hehe
 
   cloud:
     gateway:
@@ -28,3 +30,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://discovery-server:8761/eureka
+
+security:
+  auth-paths: /order-service/**
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
