@@ -6,11 +6,15 @@ spring:
       uri: mongodb://localhost:27017/products
   profiles:
     active: dev
+  grpc:
+    server:
+      port: 9090
+  kafka:
+    bootstrap-servers: localhost:9092
 
 server:
   servlet:
     context-path: /product-service
-
   port: 0
 
 eureka:

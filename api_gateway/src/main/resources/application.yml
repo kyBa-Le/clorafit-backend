@@ -2,13 +2,19 @@ server:
   port: 8080
 
 spring:
+  main:
+    web-application-type: reactive
+
   application:
     name: api_gateway
+
+  jwt:
+    secret-key: thisislekybasecretkey15042005hehe
 
   cloud:
     gateway:
       server:
-        webmvc:
+        webflux:
           routes:
             - id: auth
               uri: lb://auth-service
@@ -19,7 +25,20 @@ spring:
               uri: lb://product-service
               predicates:
                 - Path=/product-service/api/**
+
+            - id: order
+              uri: lb://order-service
+              predicates:
+                - Path=/order-service/**
+              filters:
+                - name: JwtFilter
+
 eureka:
   client:
     service-url:
       defaultZone: http://discovery-server:8761/eureka
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

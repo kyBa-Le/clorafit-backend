@@ -1,26 +1,32 @@
 package com.project.auth.domain.service;
 
+import com.project.auth.domain.entity.User;
 import com.project.auth.infrastructure.util.JwtProvider;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.project.auth.persistence.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import javax.management.InvalidAttributeValueException;
 
 @Service
 public class AuthService {
     private final JwtProvider jwtProvider;
-    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(JwtProvider jwtProvider, AuthenticationManager authenticationManager) {
+    public AuthService(JwtProvider jwtProvider, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.jwtProvider = jwtProvider;
-        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public String authenticate(String phone, String password) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(phone, password);
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return jwtProvider.generateToken(userDetails.getUsername());
+    public String login(String phone, String password) throws InvalidAttributeValueException {
+        User user = userRepository.findByPhone(phone);
+        if (user == null) {
+            throw new InvalidAttributeValueException("phone or password is incorrect");
+        }
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new InvalidAttributeValueException("phone or password is incorrect");
+        }
+        return jwtProvider.generateToken(user.getID(), user.getPhone());
     }
 }

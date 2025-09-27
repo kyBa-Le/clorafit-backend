@@ -2,7 +2,7 @@ package com.project.product.business.service;
 
 import com.project.product.business.entity.Category;
 import com.project.product.business.exception.ResourceNotFoundException;
-import com.project.product.persistence.repository.CategoryRepository;
+import com.project.product.infrastructure.persistence.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

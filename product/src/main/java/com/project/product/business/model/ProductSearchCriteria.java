@@ -1,8 +1,8 @@
 package com.project.product.business.model;
 
 import com.project.product.business.entity.Category;
-import com.project.product.presentation.constants.ProductSortFieldMapper;
-import com.project.product.presentation.dto.request.GetProductsRequest;
+import com.project.product.infrastructure.constant.ProductSortFieldMapper;
+import com.project.product.adapter.restApi.dto.request.GetProductsRequest;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Sort;
