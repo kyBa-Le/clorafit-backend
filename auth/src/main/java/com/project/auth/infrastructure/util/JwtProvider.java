@@ -1,6 +1,5 @@
 package com.project.auth.infrastructure.util;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,32 +20,16 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String subject) {
+    public String generateToken(String userId, String phone) {
         Date expirationDate = new Date((new Date().getTime()) + expiration);
         return Jwts
                 .builder()
-                .subject(subject)
+                .subject(userId)
+                .claim("phone", phone)
                 .expiration(expirationDate)
                 .issuedAt(new Date())
                 .signWith(this.getSecretKey())
                 .compact();
     }
 
-    public String getSubject(String token) {
-        return this.extractClaims(token).getSubject();
-    }
-
-    public Claims extractClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(this.getSecretKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-    }
-
-    public boolean isTokenExpired(String token) {
-        Date expirationDate = this.extractClaims(token).getExpiration();
-        Date now = new Date();
-        return now.after(expirationDate);
-    }
 }

@@ -6,12 +6,12 @@ import com.project.auth.presentation.restfulApi.dto.base.SuccessResponse;
 import com.project.auth.presentation.restfulApi.dto.request.LoginDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.management.InvalidAttributeValueException;
 import java.util.Map;
 
 @RestController
@@ -25,19 +25,12 @@ public class AuthController {
     @PostMapping("/api/v1/login")
     public ResponseEntity<?> usernamePasswordLogin(@Validated @RequestBody LoginDto loginDto) {
         try {
-            String token = authService.authenticate(loginDto.phone(), loginDto.password());
+            String token = authService.login(loginDto.phone(), loginDto.password());
             return ResponseEntity.ok(new SuccessResponse<>("Login Success", Map.of("token", token)));
-
-        } catch (BadCredentialsException ex) {
-            return responseError("BAD_CREDENTIALS", "Invalid username or password");
-        } catch (AuthenticationException ex) {
-            return responseError("AUTH_ERROR", ex.getMessage());
+        } catch (InvalidAttributeValueException ex) {
+            CustomErrorResponse response = CustomErrorResponse.build("BAD_CREDENTIALS", "Invalid username or password", null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
-    }
-
-    private ResponseEntity<CustomErrorResponse> responseError(String code, String message) {
-        CustomErrorResponse response = CustomErrorResponse.build(code, message, null);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
 }

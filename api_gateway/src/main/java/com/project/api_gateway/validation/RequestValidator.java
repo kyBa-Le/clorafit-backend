@@ -3,14 +3,9 @@ package com.project.api_gateway.validation;
 import com.project.api_gateway.util.ITokenProvider;
 import com.project.api_gateway.util.JwtProvider;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import java.util.List;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 public class RequestValidator {
@@ -20,18 +15,16 @@ public class RequestValidator {
         this.tokenProvider = jwtProvider;
     }
 
-    public Authentication validateToken(HttpServletRequest request) {
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (header == null || !header.startsWith("Bearer ")) {
-            throw new BadCredentialsException("Missing or Invalid Authorization header");
-        }
-        String token = header.substring(7);
+    public String validateToken(ServerHttpRequest request) {
+        Claims tokenBody = tokenProvider.extractClaims(getToken(request));
+        return (tokenBody.getSubject());
+    }
 
-        try {
-            Claims tokenBody = tokenProvider.extractClaims(token);
-            return new UsernamePasswordAuthenticationToken(tokenBody.getSubject(), null, List.of());
-        } catch (JwtException e) {
-            throw new BadCredentialsException("Invalid token");
+    public String getToken(ServerHttpRequest request) {
+        String header = request.getHeaders().getFirst(AUTHORIZATION);
+        if (header == null || !header.startsWith("Bearer ")) {
+            return null;
         }
+        return header.substring(7);
     }
 }

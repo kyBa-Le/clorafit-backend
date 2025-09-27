@@ -6,6 +6,7 @@ import com.project.order.adapter.restApi.dto.request.CreateOrderDto;
 import com.project.order.adapter.restApi.dto.response.SuccessResponse;
 import com.project.order.domain.grpcService.ProductServiceClient;
 import com.project.order.domain.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +26,9 @@ public class OrderController {
     }
 
     @PostMapping("/v1/orders")
-    public ResponseEntity<?> createOrder(@RequestBody CreateOrderDto dto) throws JsonProcessingException {
+    public ResponseEntity<?> createOrder(@RequestBody CreateOrderDto dto, HttpServletRequest request) throws JsonProcessingException {
         var product = productServiceClient.getProductById(dto.productId());
-        var order = this.orderService.createOrder(dto.status(), dto.consumerId(), dto.quantity(), dto.note(), dto.properties(), product);
+        var order = this.orderService.createOrder(dto.status(), request.getHeader("X-User-Id"), dto.quantity(), dto.note(), dto.properties(), product);
         this.orderProducer.orderCreatedEvent(order.getProduct_id(), dto.quantity());
         var response = new SuccessResponse<>("Order created successfully", order);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

@@ -18,7 +18,6 @@ public class JwtProvider implements ITokenProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
     public Claims extractClaims(String token) {
         return Jwts.parser()
                 .verifyWith(this.getSecretKey())

@@ -1,34 +1,36 @@
 package com.project.api_gateway.middleware;
 
 import com.project.api_gateway.validation.RequestValidator;
-import io.micrometer.common.lang.NonNull;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
-import java.io.IOException;
+import io.jsonwebtoken.JwtException;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
-public class JwtFilter extends OncePerRequestFilter {
-    RequestValidator requestValidator;
+@Component
+public class JwtFilter extends AbstractGatewayFilterFactory<Object> {
+
+    private final RequestValidator requestValidator;
 
     public JwtFilter(RequestValidator requestValidator) {
+        super(Object.class);
         this.requestValidator = requestValidator;
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain)
-            throws ServletException, IOException {
-        try {
-            var authentication = requestValidator.validateToken(request);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(request, response);
-        } catch (BadCredentialsException e) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Token");
-        }
+    public GatewayFilter apply(Object config) {
+        return (exchange, chain) -> {
+            var request = exchange.getRequest();
+            var response = exchange.getResponse();
+            try {
+                var authentication = requestValidator.validateToken(request);
+                exchange.getAttributes().put("auth", authentication);
+
+                return chain.filter(exchange);
+            } catch (JwtException e) {
+                response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                return response.setComplete();
+            }
+        };
     }
 }
