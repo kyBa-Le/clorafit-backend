@@ -27,7 +27,7 @@ public class JwtFilter extends AbstractGatewayFilterFactory<Object> {
                 exchange.getAttributes().put("auth", authentication);
 
                 return chain.filter(exchange);
-            } catch (JwtException e) {
+            } catch (JwtException | IllegalArgumentException e) {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
             }
