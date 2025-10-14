@@ -1,4 +1,6 @@
 # This is an ecommerce website project
+This project following the project idea from roadmap.sh site. Here is the project link: 
+https://roadmap.sh/projects/scalable-ecommerce-platform
 
 ## Installation 
 (You need to already have the Docker Desktop and Git in you device)

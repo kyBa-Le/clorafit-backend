@@ -10,6 +10,7 @@ import com.project.order.adapter.restApi.dto.error.ErrorDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -39,8 +40,8 @@ public class OrderService {
         var order = new Orders();
         order.setAmount(quantity * product.price());
         order.setStatus(status);
-        order.setConsumer_id(consumerId);
-        order.setProduct_id(product.id());
+        order.setConsumerId(consumerId);
+        order.setProductId(product.id());
         order.setQuantity(quantity);
         order.setNote(note);
         order.setProperties(properties);
@@ -48,5 +49,9 @@ public class OrderService {
 
         this.orderRepository.save(order);
         return order;
+    }
+
+    public List<Orders> getOrdersByUserId(String userId) {
+        return this.orderRepository.findByConsumerId(userId);
     }
 }

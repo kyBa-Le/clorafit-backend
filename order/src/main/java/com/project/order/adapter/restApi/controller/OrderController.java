@@ -9,9 +9,9 @@ import com.project.order.domain.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 public class OrderController {
@@ -29,8 +29,19 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderDto dto, HttpServletRequest request) throws JsonProcessingException {
         var product = productServiceClient.getProductById(dto.productId());
         var order = this.orderService.createOrder(dto.status(), request.getHeader("X-User-Id"), dto.quantity(), dto.note(), dto.properties(), product);
-        this.orderProducer.orderCreatedEvent(order.getProduct_id(), dto.quantity());
+        this.orderProducer.orderCreatedEvent(order.getProductId(), dto.quantity());
         var response = new SuccessResponse<>("Order created successfully", order);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/v1/users/{id}/orders")
+    public ResponseEntity<?> getOrders(@PathVariable String id, HttpServletRequest request) {
+        var userId = request.getHeader("X-User-Id");
+        if (!Objects.equals(id, userId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        var orders = this.orderService.getOrdersByUserId(userId);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 }

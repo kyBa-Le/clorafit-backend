@@ -17,8 +17,8 @@ public class Orders {
     private double amount;
     private Date date;
     private OrderStatus status;
-    private String consumer_id;
-    private String product_id;
+    private String consumerId;
+    private String productId;
     private int quantity;
     private String note;
     private String properties;
