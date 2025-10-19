@@ -3,10 +3,8 @@ package com.project.order.domain.service;
 import com.project.order.domain.dto.ProductResponseDto;
 import com.project.order.domain.entity.OrderStatus;
 import com.project.order.domain.entity.Orders;
-import com.project.order.domain.exception.InvalidValueException;
 import com.project.order.domain.validation.OrderValidator;
 import com.project.order.infrastructure.persistence.OrderRepository;
-import com.project.order.adapter.restApi.dto.error.ErrorDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -30,12 +28,7 @@ public class OrderService {
             String properties,
             ProductResponseDto product
     ) {
-
-        boolean isQuantityValid = this.orderValidator.isQuantityValid(quantity, product.quantity());
-        if (!isQuantityValid) {
-            ErrorDetail errorDetail = new ErrorDetail("quantity", "invalid quantity");
-            throw new InvalidValueException("quantity is not valid", errorDetail);
-        }
+        this.orderValidator.validateRequestCreateOrder(consumerId, quantity, product);
 
         var order = new Orders();
         order.setAmount(quantity * product.price());

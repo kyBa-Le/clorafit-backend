@@ -1,6 +1,6 @@
 package com.project.order.adapter.middleware;
 
-import com.project.order.domain.exception.InvalidValueException;
+import com.project.order.domain.exception.InvalidRequestCreateOrder;
 import com.project.order.domain.exception.ResourceNotFoundException;
 import com.project.order.adapter.restApi.dto.error.Error;
 import com.project.order.adapter.restApi.dto.response.ErrorResponse;
@@ -28,9 +28,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InvalidValueException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidValueException(InvalidValueException ex, WebRequest request) {
-        Error error = new Error(ex.getMessage(), "INVALID_VALUE", List.of(ex.errorDetail));
+    @ExceptionHandler(InvalidRequestCreateOrder.class)
+    public ResponseEntity<ErrorResponse> handleInvalidValueException(InvalidRequestCreateOrder ex, WebRequest request) {
+        Error error = new Error(ex.getMessage(), "INVALID_REQUEST", List.of(ex.errorDetail));
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST,

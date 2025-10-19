@@ -5,8 +5,8 @@ https://roadmap.sh/projects/scalable-ecommerce-platform
 ## Installation 
 (You need to already have the Docker Desktop and Git in you device)
 
-1. Open the Command line in your D disk
-2. Clone the project using below command
+1. Open the Terminal in the location that you want to store the project
+2. Clone the project using the below command
    ```
    git clone https://github.com/kyBa-Le/Smarket-backend
    ```

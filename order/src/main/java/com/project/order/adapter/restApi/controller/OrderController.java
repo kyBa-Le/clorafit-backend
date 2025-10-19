@@ -40,8 +40,8 @@ public class OrderController {
         if (!Objects.equals(id, userId)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
         var orders = this.orderService.getOrdersByUserId(userId);
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        var response = new SuccessResponse<>("Success", orders);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
