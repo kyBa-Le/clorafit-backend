@@ -1,0 +1,20 @@
+spring:
+
+  datasource:
+    username: root
+    url: jdbc:mysql://auth-myql:3306/auth
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jwt:
+    secret-key: thisislekybasecretkey15042005hehe
+    expiration: 360000
+
+server:
+  port: 0
+  servlet:
+    context-path: /auth-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka

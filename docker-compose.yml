@@ -76,7 +76,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://internal-mysql:3306/auth?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ""
-      SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
 
   product-service:
     build: ./product
