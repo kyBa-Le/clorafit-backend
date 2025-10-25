@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jwt:
-    secret-key: thisislekybasecretkey15042005hehe
+    secret-key: ${SPRING_JWT_SECRET_KEY}
     expiration: 360000
 
 server:
@@ -16,4 +16,4 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://discovery-server:8761/eureka
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}

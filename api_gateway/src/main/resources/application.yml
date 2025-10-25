@@ -10,9 +10,6 @@ spring:
   application:
     name: api_gateway
 
-  jwt:
-    secret-key: ${SPRING_JWT_SECRET_KEY}
-
   cloud:
     gateway:
       server:
