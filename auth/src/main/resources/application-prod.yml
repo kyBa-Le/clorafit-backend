@@ -1,8 +1,7 @@
 spring:
-
   datasource:
     username: root
-    url: jdbc:mysql://auth-myql:3306/auth
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jwt:

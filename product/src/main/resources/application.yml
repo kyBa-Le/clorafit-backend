@@ -1,23 +1,10 @@
 spring:
   application:
     name: product-service
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/products
   profiles:
-    active: dev
-  grpc:
-    server:
-      port: 9090
-  kafka:
-    bootstrap-servers: localhost:9092
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
 server:
   servlet:
     context-path: /product-service
   port: 0
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://discovery-server:8761/eureka
