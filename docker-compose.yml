@@ -105,6 +105,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://internal-mysql:3306/order?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE_ACTIVE}
 
 volumes:
   mysql_data:
