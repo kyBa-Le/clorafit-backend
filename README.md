@@ -1,5 +1,5 @@
 # This is an ecommerce website project built with Micorservices Architecture
-This project following the project challenge from roadmap.sh website. Here is the project link: 
+This project following the project challenge from roadmap.sh website. Here is the project idea link: 
 https://roadmap.sh/projects/scalable-ecommerce-platform
 
 ## Installation 
