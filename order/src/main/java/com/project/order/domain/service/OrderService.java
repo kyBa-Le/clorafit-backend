@@ -28,7 +28,7 @@ public class OrderService {
             String properties,
             ProductResponseDto product
     ) {
-        this.orderValidator.validateRequestCreateOrder(consumerId, quantity, product);
+        this.orderValidator.validateRequestCreateOrder(consumerId, quantity, status, product);
 
         var order = new Orders();
         order.setAmount(quantity * product.price());

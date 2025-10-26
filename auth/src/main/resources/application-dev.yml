@@ -6,7 +6,7 @@ spring:
 
   jwt:
     secret-key: thisislekybasecretkey15042005hehe
-    expiration: 3600000
+    expiration: 360000000
 
 eureka:
   client:
