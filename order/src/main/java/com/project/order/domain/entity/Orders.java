@@ -22,4 +22,19 @@ public class Orders {
     private int quantity;
     private String note;
     private String properties;
+
+    public Orders() {}
+
+    public Orders(double amount, Date date, OrderStatus status, String consumerId,
+                  String productId, int quantity, String note, String properties)
+    {
+        this.amount = amount;
+        this.date = date;
+        this.status = status;
+        this.consumerId = consumerId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.note = note;
+        this.properties = properties;
+    }
 }

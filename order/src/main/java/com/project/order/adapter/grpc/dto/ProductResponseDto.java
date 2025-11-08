@@ -1,4 +1,4 @@
-package com.project.order.domain.dto;
+package com.project.order.adapter.grpc.dto;
 
 public record ProductResponseDto(
         String id,

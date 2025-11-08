@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.order.adapter.messaging.producer.OrderProducer;
 import com.project.order.adapter.restApi.dto.request.CreateOrderDto;
 import com.project.order.adapter.restApi.dto.response.SuccessResponse;
-import com.project.order.domain.grpcService.ProductServiceClient;
+import com.project.order.adapter.grpc.client.ProductServiceClient;
 import com.project.order.domain.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

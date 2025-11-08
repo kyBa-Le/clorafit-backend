@@ -1,7 +1,7 @@
 package com.project.order.domain.validation;
 
 import com.project.order.adapter.restApi.dto.error.ErrorDetail;
-import com.project.order.domain.dto.ProductResponseDto;
+import com.project.order.adapter.grpc.dto.ProductResponseDto;
 import com.project.order.domain.entity.OrderStatus;
 import com.project.order.domain.exception.InvalidRequestCreateOrder;
 import com.project.order.infrastructure.persistence.OrderRepository;

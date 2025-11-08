@@ -1,6 +1,6 @@
 package com.project.order.domain.service;
 
-import com.project.order.domain.dto.ProductResponseDto;
+import com.project.order.adapter.grpc.dto.ProductResponseDto;
 import com.project.order.domain.entity.OrderStatus;
 import com.project.order.domain.entity.Orders;
 import com.project.order.domain.validation.OrderValidator;
@@ -30,15 +30,8 @@ public class OrderService {
     ) {
         this.orderValidator.validateRequestCreateOrder(consumerId, quantity, status, product);
 
-        var order = new Orders();
-        order.setAmount(quantity * product.price());
-        order.setStatus(status);
-        order.setConsumerId(consumerId);
-        order.setProductId(product.id());
-        order.setQuantity(quantity);
-        order.setNote(note);
-        order.setProperties(properties);
-        order.setDate(new Date());
+        double amount = (quantity * product.price());
+        var order = new Orders(amount, new Date(), status, consumerId, product.id(), quantity, note, properties);
 
         this.orderRepository.save(order);
         return order;
