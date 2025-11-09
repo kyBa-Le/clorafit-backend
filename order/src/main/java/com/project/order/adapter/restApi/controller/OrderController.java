@@ -1,7 +1,6 @@
 package com.project.order.adapter.restApi.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.project.order.adapter.messaging.producer.OrderProducer;
 import com.project.order.adapter.restApi.dto.request.CreateOrderDto;
 import com.project.order.adapter.restApi.dto.response.SuccessResponse;
 import com.project.order.adapter.grpc.client.ProductServiceClient;
@@ -17,19 +16,20 @@ import java.util.Objects;
 public class OrderController {
     private final OrderService orderService;
     private final ProductServiceClient productServiceClient;
-    private final OrderProducer orderProducer;
 
-    public OrderController(OrderService orderService, ProductServiceClient productServiceClient, OrderProducer orderProducer) {
+    public OrderController(OrderService orderService, ProductServiceClient productServiceClient) {
         this.orderService = orderService;
         this.productServiceClient = productServiceClient;
-        this.orderProducer = orderProducer;
     }
 
     @PostMapping("/v1/orders")
-    public ResponseEntity<?> createOrder(@RequestBody CreateOrderDto dto, HttpServletRequest request) throws JsonProcessingException {
+    public ResponseEntity<?> createOrder(@RequestBody CreateOrderDto dto, HttpServletRequest request)
+            throws JsonProcessingException
+    {
         var product = productServiceClient.getProductById(dto.productId());
-        var order = this.orderService.createOrder(dto.status(), request.getHeader("X-User-Id"), dto.quantity(), dto.note(), dto.properties(), product);
-        this.orderProducer.orderCreatedEvent(order.getProductId(), dto.quantity());
+        var order = this.orderService.createOrder(dto.status(), request.getHeader("X-User-Id"),
+                dto.quantity(), dto.note(), dto.properties(), product);
+
         var response = new SuccessResponse<>("Order created successfully", order);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
