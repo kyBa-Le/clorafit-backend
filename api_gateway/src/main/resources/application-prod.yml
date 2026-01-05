@@ -1,0 +1,8 @@
+spring:
+  jwt:
+    secret-key: ${SPRING_JWT_SECRET_KEY}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}

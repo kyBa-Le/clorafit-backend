@@ -1,10 +1,10 @@
-package com.project.order.domain.grpcService;
+package com.project.order.adapter.grpc.client;
 
 import com.project.order.ProductServiceOuterClass;
 import com.project.order.configuration.GrpcClientConfig;
-import com.project.order.domain.dto.ProductResponseDto;
+import com.project.order.adapter.grpc.dto.ProductResponseDto;
 import com.project.order.domain.exception.ResourceNotFoundException;
-import com.project.order.infrastructure.port.ProductServicePort;
+import com.project.order.adapter.grpc.port.ProductServicePort;
 import com.project.order.adapter.restApi.dto.error.ErrorDetail;
 import org.springframework.stereotype.Service;
 

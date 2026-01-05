@@ -17,9 +17,24 @@ public class Orders {
     private double amount;
     private Date date;
     private OrderStatus status;
-    private String consumer_id;
-    private String product_id;
+    private String consumerId;
+    private String productId;
     private int quantity;
     private String note;
     private String properties;
+
+    public Orders() {}
+
+    public Orders(double amount, Date date, OrderStatus status, String consumerId,
+                  String productId, int quantity, String note, String properties)
+    {
+        this.amount = amount;
+        this.date = date;
+        this.status = status;
+        this.consumerId = consumerId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.note = note;
+        this.properties = properties;
+    }
 }

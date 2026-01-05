@@ -1,0 +1,11 @@
+spring:
+  jwt:
+    secret-key: thisislekybasecretkey15042005hehe
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id:
